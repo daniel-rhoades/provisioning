@@ -1,0 +1,11 @@
+.idea/
+*.tfstate
+*.tfstate.backup
+*.tfvars
+.terraform/
+_output/
+
+containers/*
+networking/*
+securitygroups/*
+sparkcluster/*

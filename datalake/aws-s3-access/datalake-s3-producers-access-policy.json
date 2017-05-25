@@ -1,0 +1,23 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:Put*",
+        "s3:List*"
+      ],
+      "Resource": "arn:aws:s3:::${data_bucket_name}/INPUT/*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "kms:Encrypt",
+        "kms:Decrypt"
+      ],
+      "Resource": [
+        "${data_encryption_key_arn}"
+      ]
+    }
+  ]
+}
