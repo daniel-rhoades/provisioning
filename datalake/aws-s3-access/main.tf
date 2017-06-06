@@ -38,32 +38,32 @@ resource "aws_iam_group_policy_attachment" "producers" {
   policy_arn = "${aws_iam_policy.producers.arn}"
 }
 
-# Add a user to that producers group - bob
-resource "aws_iam_user" "bob" {
-  name = "bob"
+# Add a user to that producers group - fred
+resource "aws_iam_user" "fred" {
+  name = "fred"
 }
 
 # Create an IAM key for "bob"
-resource "aws_iam_access_key" "bob" {
-  user = "${aws_iam_user.bob.name}"
+resource "aws_iam_access_key" "fred" {
+  user = "${aws_iam_user.fred.name}"
 }
 
 resource "aws_iam_group_membership" "producers" {
   name = "DataLakeProducer-${var.owner}-membership"
 
   users = [
-    "${aws_iam_user.bob.name}"
+    "${aws_iam_user.fred.name}"
   ]
 
   group = "${aws_iam_group.producers.name}"
 }
 
-output "bob_access_key_access" {
-  value = "${aws_iam_access_key.bob.id}"
+output "fred_access_key_access" {
+  value = "${aws_iam_access_key.fred.id}"
 }
 
-output "bob_access_key_secret" {
-  value = "${aws_iam_access_key.bob.secret}"
+output "fred_access_key_secret" {
+  value = "${aws_iam_access_key.fred.secret}"
 }
 
 # Build up the Data Lake S3 bucket consumer access policy from a template
@@ -94,32 +94,32 @@ resource "aws_iam_group_policy_attachment" "consumers" {
   policy_arn = "${aws_iam_policy.consumers.arn}"
 }
 
-# Add a user to that consumers group - fred
-resource "aws_iam_user" "fred" {
-  name = "fred"
+# Add a user to that consumers group - bob
+resource "aws_iam_user" "bob" {
+  name = "bob"
 }
 
 resource "aws_iam_group_membership" "consumers" {
   name = "DataLakeConsumers-${var.owner}-membership"
 
   users = [
-    "${aws_iam_user.fred.name}"
+    "${aws_iam_user.bob.name}"
   ]
 
   group = "${aws_iam_group.producers.name}"
 }
 
-# Create an IAM key for "fred"
-resource "aws_iam_access_key" "fred" {
-  user = "${aws_iam_user.fred.name}"
+# Create an IAM key for "bob"
+resource "aws_iam_access_key" "bob" {
+  user = "${aws_iam_user.bob.name}"
 }
 
-output "fred_access_key_access" {
-  value = "${aws_iam_access_key.fred.id}"
+output "bob_access_key_access" {
+  value = "${aws_iam_access_key.bob.id}"
 }
 
-output "fred_access_key_secret" {
-  value = "${aws_iam_access_key.fred.secret}"
+output "bob_access_key_secret" {
+  value = "${aws_iam_access_key.bob.secret}"
 }
 
 # Reference to the AWS account in use
